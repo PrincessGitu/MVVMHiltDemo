@@ -81,7 +81,6 @@ class ProductDetailsFragment : Fragment() {
                             productDetailPrice.text = "Rs." + pData.cost.toString()
                             productDetailDescription.text = pData.description
                             productDetailProducer.text = pData.producer
-                            productDetailRatingBar.rating=pData.rating.toFloat()
                         }
 
                         imageAdapter= ProductImageAdapter(::onImageClick,pData.product_images)
