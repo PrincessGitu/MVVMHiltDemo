@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="product"
+            type="com.example.noteapp.model.Product" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/note_background">
+
+        <ImageView
+            android:id="@+id/imgRecyclerItem"
+            android:layout_width="73.33dp"
+            android:layout_height="73.33dp"
+            android:layout_marginLeft="13.33dp"
+            android:layout_marginTop="13.33dp"
+            android:layout_marginRight="13.33dp"
+            android:layout_marginBottom="13.33dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            imageFromUrl="@{product.product_images}"
+            android:contentDescription="@string/app_name"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideLine1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtItemName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/sf_pro_display_semibold"
+            android:text="@{product.name}"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/txtItemSellerName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideLine1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideLine1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="100dp" />
+
+        <TextView
+            android:id="@+id/txtItemSellerName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/sf_pro_display_medium"
+            android:text="@{product.producer}"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toTopOf="@+id/txtItemPrice"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideLine1"
+            app:layout_constraintTop_toBottomOf="@+id/txtItemName" />
+
+        <TextView
+            android:id="@+id/txtItemPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16.67dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/sf_pro_display_medium"
+            android:text="@{`Rs. ` +Integer.toString(product.cost)}"
+
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintStart_toStartOf="@id/guideLine1"
+            app:layout_constraintTop_toBottomOf="@+id/txtItemSellerName" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            ratingValue="@{product.rating}"
+            android:theme="@style/RatingBar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtItemSellerName" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

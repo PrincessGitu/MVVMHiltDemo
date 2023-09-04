@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="light_gray">#a2a2a2</color>
+    <color name="highlight_text_color">#2196F3</color>
+    <color name="green_500">#00A956</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="star_rating_color">#FFBA00</color>
+    <color name="product_detail_background">#ededed</color>
+    <color name="red">#DC746C</color>
+</resources>

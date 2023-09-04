@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/productBasicDetail"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/ProductDetailName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginLeft="13.33dp"
+            android:layout_marginRight="13.33dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:textSize="58px"
+            android:textColor="#262626"
+            android:fontFamily="@font/sf_pro_display_bold"
+            />
+        <TextView
+            android:id="@+id/productDetailCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text= ""
+            android:layout_marginLeft="13.33dp"
+            android:layout_marginRight="13.33dp"
+            android:textSize="48px"
+            android:textColor="#4f4f4f"
+            android:fontFamily="@font/sf_pro_display_semibold"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="5dp">
+            <TextView
+                android:id="@+id/productDetailProducer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginLeft="13.33dp"
+                android:layout_marginTop="5dp"
+                android:textSize="30px"
+                android:layout_weight="1"
+                android:fontFamily="@font/sf_pro_display_medium"
+                android:textColor="#4f4f4f"
+                />
+
+            <RatingBar
+                android:id="@+id/productDetailRatingBar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:layout_marginRight="13.33dp"
+                android:theme="@style/RatingBar" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/productBasicDetail"
+        app:cardCornerRadius="5dp"
+        android:layout_marginTop="16.67dp"
+        android:layout_marginLeft="13.33dp"
+        android:layout_marginRight="13.33dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/productDetailPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13.33dp"
+                android:layout_marginTop="13.33dp"
+                android:fontFamily="@font/sf_pro_display_medium"
+                android:text=""
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/productDetailSharing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13.33dp"
+                android:layout_marginRight="13.33dp"
+                android:src="@drawable/ic_share"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="257dp"
+                android:layout_height="178dp"
+                android:id="@+id/productDetailImage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guideline2" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="43dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/productDetailRecyclerview"
+                app:layout_constraintTop_toBottomOf="@id/productDetailImage"
+                tools:listitem="@layout/product_details_image_item"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:id="@+id/horiontalLine"
+                android:background="@color/product_detail_background"
+                android:layout_marginTop="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/productDetailRecyclerview"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/descriptionName"
+                android:text="DESCRIPTION"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="30px"
+                android:fontFamily="@font/sf_pro_display_medium"
+                android:layout_marginTop="13.33dp"
+                android:layout_marginLeft="13.33dp"
+                android:textColor="#111111"
+                app:layout_constraintTop_toBottomOf="@+id/horiontalLine"
+                tools:ignore="SmallSp" />
+            <TextView
+                android:id="@+id/productDetailDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/descriptionName"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text=""
+                android:textSize="30px"
+                android:layout_marginLeft="13.33dp"
+                android:layout_marginRight="13.33dp"
+                android:textColor="#333333"
+                android:fontFamily="@font/sf_pro_display_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="5dp"
+                />
+
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:visibility="gone"
+                android:id="@+id/product_progress_bar"
+                android:indeterminate="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:indicatorColor="@color/green_500"
+                app:indicatorSize="64dp"
+                app:trackColor="@color/purple_500"
+                app:trackThickness="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
