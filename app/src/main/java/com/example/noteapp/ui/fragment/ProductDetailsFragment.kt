@@ -1,7 +1,11 @@
 package com.example.noteapp.ui.fragment
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +13,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.noteapp.adapter.ProductImageAdapter
@@ -19,6 +24,14 @@ import com.example.noteapp.utils.Resource
 import com.example.noteapp.viewModels.NeoProductDetailsViewModel
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
+import java.net.URL
 
 
 @AndroidEntryPoint
@@ -59,6 +72,8 @@ class ProductDetailsFragment : Fragment() {
         bindObserverData()
 
         binding.productDetailSharing.setOnClickListener {
+            val uri = Uri.parse(imageUrl)
+
               shareImage(imageUrl)
         }
     }
@@ -67,10 +82,14 @@ class ProductDetailsFragment : Fragment() {
     private fun shareImage(uriToImage: String) {
         val shareIntent = Intent()
         shareIntent.action = Intent.ACTION_SEND
-        shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage)
-        shareIntent.type = "image/jpeg"
+      //  shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage)
+       // shareIntent.type = "image/jpeg"
+        shareIntent. putExtra(Intent.EXTRA_TEXT, uriToImage)
+        shareIntent. type = "text/plain"
         startActivity(Intent.createChooser(shareIntent, null))
     }
+
+
 
     private fun bindObserverData() {
         productDetailsViewModel.productDetailsList.observe(viewLifecycleOwner, Observer {
@@ -103,6 +122,7 @@ class ProductDetailsFragment : Fragment() {
                             adapter = imageAdapter
                         }
                         val url = pData.product_images[0].image
+                        imageUrl=pData.product_images[0].image
                         Glide.with(requireContext()).load(url).into(binding.productDetailImage)
 
 
