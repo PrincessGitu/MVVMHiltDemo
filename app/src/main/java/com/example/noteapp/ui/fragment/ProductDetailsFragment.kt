@@ -1,6 +1,6 @@
 package com.example.noteapp.ui.fragment
 
-import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -28,9 +28,9 @@ class ProductDetailsFragment : Fragment() {
     private var _binding: FragmentProductDetailsBinding? = null
     private val binding: FragmentProductDetailsBinding get() = _binding!!
 
-     private lateinit var imageAdapter:ProductImageAdapter
+    private lateinit var imageAdapter: ProductImageAdapter
 
-
+    lateinit var imageUrl:String
 
 
     private val productDetailsViewModel by viewModels<NeoProductDetailsViewModel>()
@@ -58,11 +58,19 @@ class ProductDetailsFragment : Fragment() {
 
         bindObserverData()
 
-        binding.productDetailSharing.setOnClickListener{
-
+        binding.productDetailSharing.setOnClickListener {
+              shareImage(imageUrl)
         }
     }
 
+
+    private fun shareImage(uriToImage: String) {
+        val shareIntent = Intent()
+        shareIntent.action = Intent.ACTION_SEND
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage)
+        shareIntent.type = "image/jpeg"
+        startActivity(Intent.createChooser(shareIntent, null))
+    }
 
     private fun bindObserverData() {
         productDetailsViewModel.productDetailsList.observe(viewLifecycleOwner, Observer {
@@ -85,12 +93,13 @@ class ProductDetailsFragment : Fragment() {
                             productDetailPrice.text = "Rs." + pData.cost.toString()
                             productDetailDescription.text = pData.description
                             productDetailProducer.text = pData.producer
-                            productDetailRatingBar.rating=pData.rating.toFloat()
+                            productDetailRatingBar.rating = pData.rating.toFloat()
                         }
 
-                        imageAdapter= ProductImageAdapter(::onImageClick,pData.product_images)
+                        imageAdapter = ProductImageAdapter(::onImageClick, pData.product_images)
                         binding.productDetailRecyclerview.apply {
-                            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                            layoutManager =
+                                LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
                             adapter = imageAdapter
                         }
                         val url = pData.product_images[0].image
@@ -106,8 +115,8 @@ class ProductDetailsFragment : Fragment() {
     }
 
 
-
     private fun onImageClick(imageData: ProductImage, position: Int) {
+        imageUrl=imageData.image
         Glide.with(requireContext()).load(imageData.image).into(binding.productDetailImage)
 
     }
