@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noteapp.R
@@ -18,6 +21,7 @@ import com.example.noteapp.utils.Resource
 import com.example.noteapp.viewModels.NeoProductViewModel
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -65,23 +69,29 @@ class ProductListingFragment : Fragment() {
     }
 
     private fun bindObserverData() {
-        productViewModel.productLit.observe(viewLifecycleOwner, Observer {
-            binding.productProgressBar.visibility = View.GONE
-            when (it) {
-                is Resource.Error -> {
-                    Log.e("Error", "=" + it.message)
-                }
 
-                is Resource.Loading -> {
-                    binding.productProgressBar.visibility = View.VISIBLE
-                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                productViewModel.productLit.collect{
+                    binding.productProgressBar.visibility = View.GONE
+                    when (it) {
+                        is Resource.Error -> {
+                            Log.e("Error", "=" + it.message)
+                        }
 
-                is Resource.Success -> {
-                    Log.e("Data", "===" + it.data?.data)
-                    listAdapter.submitList(it.data?.data)
+                        is Resource.Loading -> {
+                            binding.productProgressBar.visibility = View.VISIBLE
+                        }
+
+                        is Resource.Success -> {
+                            Log.e("Data", "===" + it.data?.data)
+                            listAdapter.submitList(it.data?.data)
+                        }
+                    }
                 }
             }
-        })
+        }
+
     }
 
 

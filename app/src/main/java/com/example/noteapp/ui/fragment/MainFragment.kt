@@ -8,7 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.noteapp.R
@@ -19,6 +22,7 @@ import com.example.noteapp.utils.Resource
 import com.example.noteapp.viewModels.NeoUserViewModel
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -58,23 +62,27 @@ class MainFragment : Fragment() {
     }
 
     private fun bindObserverData() {
-        neoUserViewModel.neoUserData.observe(viewLifecycleOwner, Observer {
-            binding.progressBar.visibility = View.GONE
-            when (it) {
-                is Resource.Error -> {
-                    Log.e("Error", "=" + it.message)
-                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                neoUserViewModel.neoUserData.collect {
+                    binding.progressBar.visibility = View.GONE
+                    when (it) {
+                        is Resource.Error -> {
+                            Log.e("Error", "=" + it.message)
+                        }
 
-                is Resource.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                }
+                        is Resource.Loading -> {
+                            binding.progressBar.visibility = View.VISIBLE
+                        }
 
-                is Resource.Success -> {
-                    Log.e("Data", "===" + it.data?.data?.product_categories)
-                    productAdapter.submitList(it.data?.data?.product_categories)
+                        is Resource.Success -> {
+                            Log.e("Data", "===" + it.data?.data?.product_categories)
+                            productAdapter.submitList(it.data?.data?.product_categories)
+                        }
+                    }
                 }
             }
-        })
+        }
     }
 
     override fun onDestroy() {

@@ -7,6 +7,7 @@ import com.example.noteapp.model.NeoUserData
 import com.example.noteapp.repository.NeoUserRepository
 import com.example.noteapp.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -14,7 +15,7 @@ import javax.inject.Inject
 class NeoUserViewModel @Inject constructor(private val neoUserRepository: NeoUserRepository) :
     ViewModel() {
 
-    val neoUserData: LiveData<Resource<NeoUserData>>
+    val neoUserData: StateFlow<Resource<NeoUserData>>
         get() = neoUserRepository.neoUserLiveData
 
     fun getUserDetails() {
