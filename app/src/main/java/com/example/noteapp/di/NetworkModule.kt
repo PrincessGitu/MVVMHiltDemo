@@ -1,5 +1,7 @@
 package com.example.noteapp.di
 
+import android.content.Context
+import com.example.noteapp.MyApplication
 import com.example.noteapp.api.AuthInterceptor
 import com.example.noteapp.api.NeoUserAPI
 import com.example.noteapp.api.NeoUserDataAPI
@@ -59,5 +61,12 @@ class NetworkModule {
             .build().create(NeoUserDataAPI::class.java)
     }
 
+
+//    @Singleton
+//    @Provides
+//    fun provideApplicationContext(application: MyApplication):Context {
+//        return application.applicationContext
+//
+//    }
 
 }
